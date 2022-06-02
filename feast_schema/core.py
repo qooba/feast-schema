@@ -1,5 +1,6 @@
 from feast import FeatureStore
 from IPython.core.display import display, HTML
+from google.protobuf.json_format import MessageToDict
 import json
 from json2html import *
 import warnings
@@ -17,11 +18,19 @@ class FeastSchema:
         feasture_tables_dictionary=self.__project_show_schema(skip_meta)
         display(HTML(json2html.convert(json = {table:feasture_tables_dictionary[table]})))
 
+    def _entity_to_dict(self, entity):
+        entity_dict = MessageToDict(entity.to_proto())
+
+        if entity_dict["meta"] == {}:
+            del entity_dict["meta"]
+
+        return entity_dict
+
     def __project_show_schema(self, skip_meta: bool= False):
         entities_dictionary={}
         feast_entities=self.store.list_entities()
         for entity in feast_entities:
-            entity_dictionary=entity.to_dict()
+            entity_dictionary=self._entity_to_dict(entity)
             entity_spec=entity_dictionary['spec']
             entities_dictionary[entity_spec['name']]=entity_spec
 
