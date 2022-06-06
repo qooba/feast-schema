@@ -5,13 +5,16 @@ help: ## This help.
 
 format: ## Format all the code using isort and black
 	isort feast_schema/
-	black --target-version py37 feast_pyspark
+	black --target-version py37 feast_schema
 
 lint: ## Run mypy, isort, flake8, and black
 	mypy feast_schema/
 	isort feast_schema/ --check-only
 	flake8 feast_schema/
 	black --check feast_schema
+
+test:
+	pytest tests
 
 build: ## Build the wheel
 	rm -rf dist/*

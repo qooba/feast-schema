@@ -21,9 +21,15 @@ REQUIRED = [
     "Click"
 ]
 REQUIRED_DEV = [
-    "pytest",
-    "requests",
     "pytest-cov>=2.10.1"
+    "flake8",
+    "black==22.3.0",
+    "isort>=5",
+    "mypy==0.790",
+    "build==0.7.0",
+    "twine==3.4.2",
+    "pytest>=6.0.0",
+    "isort>=5,<6",
 ]
 
 setup(
